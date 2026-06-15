@@ -101,7 +101,7 @@
     z-index: 1;
   }
 
-  .hero-content { max-width: 800px; }
+  .hero-content { max-width: 900px; }
 
   .hero-tag {
     display: inline-flex;
@@ -137,8 +137,8 @@
   .hero-sub {
     font-size: 18px;
     color: var(--grey-light);
-    max-width: 560px;
-    margin-bottom: 20px;
+    max-width: 680px;
+    margin-bottom: 24px;
     line-height: 1.6;
   }
 
@@ -168,26 +168,40 @@
     50% { opacity: 0.3; }
   }
 
+  /* PROFILE PARAMETERS HEADER SUBSECTION (Degree, Job Info, and Qualifications) */
   .hero-stats {
-    display: flex;
-    gap: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
     margin-bottom: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
   }
 
   .stat-number {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .stat-number span {
     color: var(--teal);
-    line-height: 1;
   }
 
   .stat-label {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--grey);
-    margin-top: 4px;
+    margin-top: 6px;
     font-family: 'Space Mono', monospace;
     letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .hero-cta {
@@ -213,7 +227,6 @@
     box-shadow: 0 0 20px var(--teal-glow);
     cursor: pointer;
     border: none;
-    position: relative;
   }
 
   .btn-primary:hover {
@@ -241,29 +254,6 @@
   .btn-secondary:hover {
     background: var(--teal-glow);
     border-color: var(--teal);
-  }
-
-  .clone-tooltip {
-    position: absolute;
-    bottom: -36px;
-    left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    background: var(--bg3);
-    border: 1px solid var(--neon);
-    color: var(--neon);
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 4px;
-    pointer-events: none;
-    opacity: 0;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-
-  .clone-tooltip.visible {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
   }
 
   /* SECTIONS */
@@ -434,7 +424,7 @@
   .project-link:hover { color: #00ffde; }
 
   /* EXPERIENCE */
-  .experience-list { display: flex; flex-direction: column; gap: 20px; }
+  .experience-list { display: flex; flex-direction: column; gap: 24px; }
 
   .exp-item {
     border: 1px solid var(--border);
@@ -499,7 +489,7 @@
     font-size: 11px;
   }
 
-  /* AUTOMATIC & MANUAL NAVIGATED SIDE-BY-SIDE CAROUSEL ARCHITECTURE */
+  /* AUTOMATIC RUNNING & CONTROLLER SLIDING CAROUSEL MECHANISM */
   .skills-carousel-meta {
     display: flex;
     justify-content: space-between;
@@ -541,7 +531,7 @@
     padding-bottom: 16px;
   }
 
-  /* Hide raw horizontal track navigation bars across modern layouts */
+  /* Remove explicit system track scroll bars */
   .skills-carousel-viewport::-webkit-scrollbar { display: none; }
   .skills-carousel-viewport { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -551,7 +541,7 @@
     width: max-content;
   }
 
-  /* Individual Topic Block Card */
+  /* Individual Topic Skill Block Card Frame */
   .skill-category-box {
     background: var(--card);
     border: 1px solid var(--border);
@@ -768,7 +758,7 @@
     .projects-grid { grid-template-columns: 1fr; }
     .project-card.featured { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; }
-    .hero-stats { gap: 24px; }
+    .hero-stats { grid-template-columns: 1fr; gap: 20px; }
     .skill-category-box { width: 290px; }
   }
 </style>
@@ -779,8 +769,8 @@
   <a href="#" class="nav-logo">ND_</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -799,28 +789,25 @@
       Data Analyst and AI Engineer building production-grade intelligence systems — from retail KPI dashboards to clinical AI platforms indexing a quarter million real trials.
     </p>
     <div class="hero-visa">Stamp 1G Visa — Available Immediately</div>
+    
     <div class="hero-stats">
       <div class="stat-item">
-        <div class="stat-number">271K</div>
-        <div class="stat-label">Clinical Trials Indexed</div>
+        <div class="stat-number">MSc <span>Business Analytics</span></div>
+        <div class="stat-label">UCD Michael Smurfit Graduate Business School</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">22</div>
-        <div class="stat-label">Stores Reporting Daily</div>
+        <div class="stat-number">Technical <span>Specialist</span></div>
+        <div class="stat-label">Halfords Ireland — Operations KPI Dashboard Engine</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">&lt;200ms</div>
-        <div class="stat-label">Semantic Search Latency</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">85%</div>
-        <div class="stat-label">Model Accuracy</div>
+        <div class="stat-number">BTech <span>AI & Data Science</span></div>
+        <div class="stat-label">Anna University — Applied Machine Learning</div>
       </div>
     </div>
+
     <div class="hero-cta">
-      <button class="btn-primary" id="terminal-clone-btn">
-        Clone Me
-        <span class="clone-tooltip" id="clone-badge">git clone copied!</span>
+      <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });">
+        See What I Cooked
       </button>
       <a href="https://linkedin.com/in/nithish-deenadayalan" target="_blank" class="btn-secondary">LinkedIn</a>
       <a href="https://github.com/nithishdeenadayalan" target="_blank" class="btn-secondary">GitHub</a>
@@ -866,6 +853,93 @@
         <span class="fact-value">IIRS, ISRO — Government of India</span>
       </div>
     </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="experience">
+  <div class="section-tag">Experience</div>
+  <h2 class="section-title">Where I've Worked</h2>
+  <div class="experience-list">
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Technical Specialist</div>
+          <div class="exp-company">Halfords Ireland — Dublin</div>
+        </div>
+        <div class="exp-date">Jun 2025 — Present</div>
+      </div>
+      <div class="exp-desc">
+        <ul>
+          <li>Developed and maintained Power BI dashboards connected to SQL Server, delivering weekly and monthly KPI reporting across all 22 Ireland locations to store managers and senior operations leadership.</li>
+          <li>Automated reporting workflows using SQL and Power Query, saving 4 to 6 hours of manual work per week and replacing fragmented Excel processes with a single consistent source of truth.</li>
+          <li>Identified and resolved data quality issues, performing root cause analysis on anomalies and implementing standardised documentation practices improving accuracy across all 22 locations.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Capstone Lead</div>
+          <div class="exp-company">University College Dublin</div>
+        </div>
+        <div class="exp-date">May 2025 — Sep 2025</div>
+      </div>
+      <div class="exp-desc">
+        <ul>
+          <li>Led development of the BDSS Energy Optimizer, processing 8,760 hourly data points through stochastic optimisation and CVaR risk modelling, reducing simulated procurement costs by 15 to 20 percent.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Data Analyst Intern</div>
+          <div class="exp-company">Intellect Design Arena — Chennai, India</div>
+        </div>
+        <div class="exp-date">Sep 2022 — Oct 2022</div>
+      </div>
+      <div class="exp-desc">
+        <ul>
+          <li>Developed Python scripts automating data extraction, transformation, and validation across large banking datasets, producing standardised forecasting metrics and documenting ETL logic for governance.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">AI Developer Intern</div>
+          <div class="exp-company">Zrae Global — Chennai, India</div>
+        </div>
+        <div class="exp-date">Mar 2021 — Aug 2022</div>
+      </div>
+      <div class="exp-desc">
+        <ul>
+          <li>Built and deployed a TensorFlow classification model achieving 85 percent accuracy across 5 categories, owning the full pipeline from data collection through model evaluation, A/B testing, and production deployment.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Research Data Contributor</div>
+          <div class="exp-company">IIRS, ISRO — Government of India</div>
+        </div>
+        <div class="exp-date">2022</div>
+      </div>
+      <div class="exp-desc">
+        <ul>
+          <li>Collaborated on an ISRO-funded satellite remote sensing project, contributing to data collection, preprocessing, and validation workflows for hydrological parameter retrieval.</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -966,93 +1040,6 @@
       </div>
       <div class="project-links">
         <a href="https://github.com/nithishdeenadayalan/clinical-trial-statistical-analysis" target="_blank" class="project-link">↗ GitHub</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<section id="experience">
-  <div class="section-tag">Experience</div>
-  <h2 class="section-title">Where I've Worked</h2>
-  <div class="experience-list">
-
-    <div class="exp-item fade-in">
-      <div class="exp-header">
-        <div>
-          <div class="exp-role">Technical Specialist</div>
-          <div class="exp-company">Halfords Ireland — Dublin</div>
-        </div>
-        <div class="exp-date">Jun 2025 — Present</div>
-      </div>
-      <div class="exp-desc">
-        <ul>
-          <li>Developed and maintained Power BI dashboards connected to SQL Server, delivering weekly and monthly KPI reporting across all 22 Ireland locations to store managers and senior operations leadership.</li>
-          <li>Automated reporting workflows using SQL and Power Query, saving 4 to 6 hours of manual work per week and replacing fragmented Excel processes with a single consistent source of truth.</li>
-          <li>Identified and resolved data quality issues, performing root cause analysis on anomalies and implementing standardised documentation practices improving accuracy across all 22 locations.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exp-item fade-in">
-      <div class="exp-header">
-        <div>
-          <div class="exp-role">Capstone Lead</div>
-          <div class="exp-company">University College Dublin</div>
-        </div>
-        <div class="exp-date">May 2025 — Sep 2025</div>
-      </div>
-      <div class="exp-desc">
-        <ul>
-          <li>Led development of the BDSS Energy Optimizer, processing 8,760 hourly data points through stochastic optimisation and CVaR risk modelling, reducing simulated procurement costs by 15 to 20 percent.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exp-item fade-in">
-      <div class="exp-header">
-        <div>
-          <div class="exp-role">Data Analyst Intern</div>
-          <div class="exp-company">Intellect Design Arena — Chennai, India</div>
-        </div>
-        <div class="exp-date">Sep 2022 — Oct 2022</div>
-      </div>
-      <div class="exp-desc">
-        <ul>
-          <li>Developed Python scripts automating data extraction, transformation, and validation across large banking datasets, producing standardised forecasting metrics and documenting ETL logic for governance.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exp-item fade-in">
-      <div class="exp-header">
-        <div>
-          <div class="exp-role">AI Developer Intern</div>
-          <div class="exp-company">Zrae Global — Chennai, India</div>
-        </div>
-        <div class="exp-date">Mar 2021 — Aug 2022</div>
-      </div>
-      <div class="exp-desc">
-        <ul>
-          <li>Built and deployed a TensorFlow classification model achieving 85 percent accuracy across 5 categories, owning the full pipeline from data collection through model evaluation, A/B testing, and production deployment.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exp-item fade-in">
-      <div class="exp-header">
-        <div>
-          <div class="exp-role">Research Data Contributor</div>
-          <div class="exp-company">IIRS, ISRO — Government of India</div>
-        </div>
-        <div class="exp-date">2022</div>
-      </div>
-      <div class="exp-desc">
-        <ul>
-          <li>Collaborated on an ISRO-funded satellite remote sensing project, contributing to data collection, preprocessing, and validation workflows for hydrological parameter retrieval.</li>
-        </ul>
       </div>
     </div>
 
@@ -1207,7 +1194,7 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Active nav link
+  // Active navigation tracking engine
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
 
@@ -1227,12 +1214,12 @@
     });
   });
 
-  // Dual-Engine Side-by-Side Automatic & Manual Scroll Box Carousel Execution
+  // Infinite Running Horizontal Carousel Engine
   const trackFrame = document.getElementById('carousel-viewport-frame');
   const leftNavArrow = document.getElementById('slide-left-trigger');
   const rightNavArrow = document.getElementById('slide-right-trigger');
 
-  const cardShiftDistance = 364; // Corresponds precisely to box metrics plus track layout gaps
+  const cardShiftDistance = 364; 
   let loopRunningInterval;
   let carouselDirectionForward = true;
 
@@ -1257,14 +1244,13 @@
   }
 
   function instantiateAutomationEngine() {
-    loopRunningInterval = setInterval(executeAutoShiftStep, 3500);
+    loopRunningInterval = setInterval(executeAutoShiftStep, 3000);
   }
 
   function terminateAutomationEngine() {
     clearInterval(loopRunningInterval);
   }
 
-  // Bind interaction mechanics to manual direction triggers
   leftNavArrow.addEventListener('click', () => {
     terminateAutomationEngine();
     trackFrame.scrollBy({ left: -cardShiftDistance, behavior: 'smooth' });
@@ -1277,29 +1263,11 @@
     instantiateAutomationEngine();
   });
 
-  // Implement automatic pause on interactive cursor bounding layout boxes
   trackFrame.addEventListener('mouseenter', terminateAutomationEngine);
   trackFrame.addEventListener('mouseleave', instantiateAutomationEngine);
 
-  // Initialize carousel automated timeline
+  // Kickstart sliding animation
   instantiateAutomationEngine();
-
-  // "Clone Me" Clipboard Action Logic
-  const cloneBtn = document.getElementById('terminal-clone-btn');
-  const toolTipBadge = document.getElementById('clone-badge');
-
-  cloneBtn.addEventListener('click', () => {
-    const gitCloneCommandStr = "git clone https://github.com/nithishdeenadayalan/clinicalmind.git";
-    
-    navigator.clipboard.writeText(gitCloneCommandStr).then(() => {
-      toolTipBadge.classList.add('visible');
-      setTimeout(() => {
-        toolTipBadge.classList.remove('visible');
-      }, 2000);
-    }).catch(err => {
-      console.error('Could not copy string text command output matrix: ', err);
-    });
-  });
 </script>
 
 </body>
