@@ -496,102 +496,125 @@
     font-weight: bold;
   }
 
-  /* INFINITE GRADIENT-MASK SCROLL CAROUSEL */
-  .skills-carousel-zone {
-    position: relative;
-    width: 100vw;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    overflow: hidden;
-    padding: 30px 0;
+  /* INTERACTIVE SIDE-BY-SIDE BOX CAROUSEL ARCHITECTURE */
+  .skills-carousel-header {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
   }
 
-  /* Fade mask overlays to match layout image requirement */
-  .skills-carousel-zone::before,
-  .skills-carousel-zone::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 180px;
-    z-index: 5;
-    pointer-events: none;
-  }
-
-  .skills-carousel-zone::before {
-    left: 0;
-    background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
-  }
-
-  .skills-carousel-zone::after {
-    right: 0;
-    background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%);
-  }
-
-  .skills-marquee {
+  .carousel-controls {
     display: flex;
-    width: max-content;
-    gap: 20px;
+    gap: 12px;
   }
 
-  .track-forward {
-    animation: slideLeft 40s linear infinite;
-  }
-
-  .track-reverse {
-    animation: slideRight 40s linear infinite;
-  }
-
-  .skills-carousel-zone:hover .skills-marquee {
-    animation-play-state: paused;
-  }
-
-  .carousel-item {
+  .control-btn {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 32px;
+    color: var(--teal);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.25s;
+    user-select: none;
+  }
+
+  .control-btn:hover {
+    border-color: var(--teal);
+    background: var(--teal-glow);
+    transform: scale(1.05);
+  }
+
+  .skills-slider-viewport {
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 15px;
+  }
+
+  /* Hide raw scrollbar while keeping drag/swipe features native */
+  .skills-slider-viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .skills-slider-viewport {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .skills-box-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+  }
+
+  /* Individual Topic/Core Skill Box */
+  .skill-topic-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    width: 320px;
+    min-height: 290px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s, transform 0.3s;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    min-width: 240px;
-    backdrop-filter: blur(8px);
-    transition: border-color 0.25s, transform 0.25s;
   }
 
-  .carousel-item:hover {
+  .skill-topic-box:hover {
     border-color: var(--border-hover);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0, 229, 204, 0.04);
   }
 
-  .c-name {
-    font-size: 15px;
-    color: var(--white);
-    font-weight: 600;
-    letter-spacing: -0.01em;
+  .topic-header-area {
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 229, 204, 0.15);
+    padding-bottom: 14px;
   }
 
-  .c-cat {
+  .topic-label {
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     color: var(--teal);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
+    display: block;
+    margin-bottom: 4px;
   }
 
-  @keyframes slideLeft {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  .topic-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
   }
 
-  @keyframes slideRight {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
+  .specific-skills-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .specific-skill-item {
+    font-size: 14.5px;
+    color: var(--grey-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .specific-skill-item::before {
+    content: '▪';
+    color: var(--neon);
+    font-size: 10px;
   }
 
   /* ABOUT */
@@ -717,6 +740,7 @@
     .hero { padding: 110px 24px 60px; }
     section { padding: 70px 24px; }
     .hero-stats { grid-template-columns: 1fr; }
+    .skill-topic-box { width: 280px; }
   }
 </style>
 </head>
@@ -997,53 +1021,99 @@
 <div class="section-divider"></div>
 
 <section id="skills">
-  <div class="section-tag">Skills</div>
-  <h2 class="section-title">Core Skills</h2>
+  <div class="skills-carousel-header">
+    <div>
+      <div class="section-tag">Skills</div>
+      <h2 class="section-title" style="margin-bottom: 0;">Core Skills</h2>
+    </div>
+    <div class="carousel-controls">
+      <button class="control-btn" id="slide-left-btn" aria-label="Slide Left">←</button>
+      <button class="control-btn" id="slide-right-btn" aria-label="Slide Right">→</button>
+    </div>
+  </div>
   
-  <div class="skills-carousel-zone fade-in">
-    
-    <div class="skills-marquee track-forward">
-      <div class="carousel-item"><span class="c-name">RAG Architectures</span><span class="c-cat">AI Engineering</span></div>
-      <div class="carousel-item"><span class="c-name">Vector Indexing (FAISS)</span><span class="c-cat">AI Engineering</span></div>
-      <div class="carousel-item"><span class="c-name">LangGraph Orchestration</span><span class="c-cat">AI Engineering</span></div>
-      <div class="carousel-item"><span class="c-name">FastAPI Services</span><span class="c-cat">Full Stack</span></div>
-      <div class="carousel-item"><span class="c-name">React.js & TypeScript</span><span class="c-cat">Full Stack</span></div>
-      <div class="carousel-item"><span class="c-name">Apache Kafka</span><span class="c-cat">Data Pipelines</span></div>
-      <div class="carousel-item"><span class="c-name">Databricks Platforms</span><span class="c-cat">Data Pipelines</span></div>
-      <div class="carousel-item"><span class="c-name">dbt Core</span><span class="c-cat">Data Pipelines</span></div>
-      <div class="carousel-item"><span class="c-name">Advanced Relational SQL</span><span class="c-cat">Analytics / BI</span></div>
-      <div class="carousel-item"><span class="c-name">RAG Architectures</span><span class="c-cat">AI Engineering</span></div>
-      <div class="carousel-item"><span class="c-name">Vector Indexing (FAISS)</span><span class="c-cat">AI Engineering</span></div>
-      <div class="carousel-item"><span class="c-name">LangGraph Orchestration</span><span class="c-cat">AI Engineering</span></div>
-      <div class="carousel-item"><span class="c-name">FastAPI Services</span><span class="c-cat">Full Stack</span></div>
-      <div class="carousel-item"><span class="c-name">React.js & TypeScript</span><span class="c-cat">Full Stack</span></div>
-      <div class="carousel-item"><span class="c-name">Apache Kafka</span><span class="c-cat">Data Pipelines</span></div>
-      <div class="carousel-item"><span class="c-name">Databricks Platforms</span><span class="c-cat">Data Pipelines</span></div>
-      <div class="carousel-item"><span class="c-name">dbt Core</span><span class="c-cat">Data Pipelines</span></div>
-      <div class="carousel-item"><span class="c-name">Advanced Relational SQL</span><span class="c-cat">Analytics / BI</span></div>
-    </div>
+  <div class="skills-slider-viewport" id="skills-slider-viewport">
+    <div class="skills-box-track">
+      
+      <div class="skill-topic-box fade-in">
+        <div class="topic-header-area">
+          <span class="topic-label">Core Discipline</span>
+          <h3 class="topic-title">AI Engineering</h3>
+        </div>
+        <ul class="specific-skills-list">
+          <li class="specific-skill-item">RAG Architectures</li>
+          <li class="specific-skill-item">Vector Indexing (FAISS)</li>
+          <li class="specific-skill-item">LangGraph Orchestration</li>
+          <li class="specific-skill-item">Sentence Transformers</li>
+        </ul>
+      </div>
 
-    <div class="skills-marquee track-reverse">
-      <div class="carousel-item"><span class="c-name">Power BI & Power Query</span><span class="c-cat">Analytics / BI</span></div>
-      <div class="carousel-item"><span class="c-name">Python Core & R</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">TensorFlow Modules</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">Stochastic Optimization</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">CVaR Evaluation</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">SAS Analytics Matrix</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">Data Governance Protocol</span><span class="c-cat">Operational Strategy</span></div>
-      <div class="carousel-item"><span class="c-name">Agile Product Delivery</span><span class="c-cat">Operational Strategy</span></div>
-      <div class="carousel-item"><span class="c-name">Stakeholder Reporting</span><span class="c-cat">Operational Strategy</span></div>
-      <div class="carousel-item"><span class="c-name">Power BI & Power Query</span><span class="c-cat">Analytics / BI</span></div>
-      <div class="carousel-item"><span class="c-name">Python Core & R</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">TensorFlow Modules</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">Stochastic Optimization</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">CVaR Evaluation</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">SAS Analytics Matrix</span><span class="c-cat">Statistical Programming</span></div>
-      <div class="carousel-item"><span class="c-name">Data Governance Protocol</span><span class="c-cat">Operational Strategy</span></div>
-      <div class="carousel-item"><span class="c-name">Agile Product Delivery</span><span class="c-cat">Operational Strategy</span></div>
-      <div class="carousel-item"><span class="c-name">Stakeholder Reporting</span><span class="c-cat">Operational Strategy</span></div>
-    </div>
+      <div class="skill-topic-box fade-in">
+        <div class="topic-header-area">
+          <span class="topic-label">Core Discipline</span>
+          <h3 class="topic-title">Analytics & BI</h3>
+        </div>
+        <ul class="specific-skills-list">
+          <li class="specific-skill-item">Power BI Infrastructure</li>
+          <li class="specific-skill-item">Power Query & DAX</li>
+          <li class="specific-skill-item">Advanced Relational SQL</li>
+          <li class="specific-skill-item">Stakeholder Reporting</li>
+        </ul>
+      </div>
 
+      <div class="skill-topic-box fade-in">
+        <div class="topic-header-area">
+          <span class="topic-label">Core Discipline</span>
+          <h3 class="topic-title">Data Pipelines</h3>
+        </div>
+        <ul class="specific-skills-list">
+          <li class="specific-skill-item">Apache Kafka Brokers</li>
+          <li class="specific-skill-item">Databricks Workspaces</li>
+          <li class="specific-skill-item">dbt Core Modeling</li>
+          <li class="specific-skill-item">ETL/ELT Architecture</li>
+        </ul>
+      </div>
+
+      <div class="skill-topic-box fade-in">
+        <div class="topic-header-area">
+          <span class="topic-label">Core Discipline</span>
+          <h3 class="topic-title">Statistical Computing</h3>
+        </div>
+        <ul class="specific-skills-list">
+          <li class="specific-skill-item">Python Core & R Language</li>
+          <li class="specific-skill-item">TensorFlow Modules</li>
+          <li class="specific-skill-item">SAS Analytics Matrix</li>
+          <li class="specific-skill-item">Survival Analysis</li>
+        </ul>
+      </div>
+
+      <div class="skill-topic-box fade-in">
+        <div class="topic-header-area">
+          <span class="topic-label">Core Discipline</span>
+          <h3 class="topic-title">Optimization Models</h3>
+        </div>
+        <ul class="specific-skills-list">
+          <li class="specific-skill-item">Stochastic Programming</li>
+          <li class="specific-skill-item">CVaR Evaluation</li>
+          <li class="specific-skill-item">Matrix Translations</li>
+          <li class="specific-skill-item">Decision Platforms</li>
+        </ul>
+      </div>
+
+      <div class="skill-topic-box fade-in">
+        <div class="topic-header-area">
+          <span class="topic-label">Core Discipline</span>
+          <h3 class="topic-title">Full Stack Strategy</h3>
+        </div>
+        <ul class="specific-skills-list">
+          <li class="specific-skill-item">FastAPI Architectures</li>
+          <li class="specific-skill-item">React.js Engine Layer</li>
+          <li class="specific-skill-item">TypeScript Typings</li>
+          <li class="specific-skill-item">Data Governance Protocols</li>
+        </ul>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -1066,6 +1136,22 @@
 </footer>
 
 <script>
+  // Side-by-Side Horizontal Carousel Slider Controls Logic
+  const sliderViewport = document.getElementById('skills-slider-viewport');
+  const leftBtn = document.getElementById('slide-left-btn');
+  const rightBtn = document.getElementById('slide-right-btn');
+
+  // Slide value corresponds exactly to box width + spacing boundary
+  const scrollOffsetValue = 344; 
+
+  leftBtn.addEventListener('click', () => {
+    sliderViewport.scrollBy({ left: -scrollOffsetValue, behavior: 'smooth' });
+  });
+
+  rightBtn.addEventListener('click', () => {
+    sliderViewport.scrollBy({ left: scrollOffsetValue, behavior: 'smooth' });
+  });
+
   // Dynamic Section Background Trigger Mechanics
   const segments = document.querySelectorAll('section[id], div[id="hero"]');
   const items = document.querySelectorAll('.nav-links a');
