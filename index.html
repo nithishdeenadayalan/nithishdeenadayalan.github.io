@@ -50,7 +50,7 @@
     background-size: 50px 50px;
   }
 
-  /* Dynamic structural transitions powered by scroll triggers */
+  /* Dynamic structural background triggers */
   body.view-hero .bg-carousel-overlay {
     background-color: #070a13;
     background-image: radial-gradient(circle at 85% 25%, var(--teal-glow-strong) 0%, transparent 60%);
@@ -90,13 +90,39 @@
     border-bottom: 1px solid var(--border);
   }
 
+  /* INTERACTIVE EXPANDING LOGO EFFECT */
   .nav-logo {
+    display: inline-flex;
+    align-items: center;
     font-family: 'Space Mono', monospace;
     font-size: 15px;
     font-weight: 700;
     color: var(--teal);
-    letter-spacing: 0.1em;
     text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .logo-static {
+    transition: color 0.3s;
+  }
+
+  .logo-dynamic {
+    max-width: 0;
+    opacity: 0;
+    display: inline-block;
+    transition: max-width 0.5s steps(22, end), opacity 0.2s ease-out;
+    color: var(--white);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo:hover .logo-dynamic {
+    max-width: 250px;
+    opacity: 1;
+  }
+  
+  .nav-logo:hover .logo-static {
+    color: var(--neon);
   }
 
   .nav-links {
@@ -165,7 +191,7 @@
   .hero-sub {
     font-size: 19px;
     color: var(--grey-light);
-    max-width: 620px;
+    max-width: 680px;
     margin-bottom: 44px;
     line-height: 1.6;
   }
@@ -470,55 +496,80 @@
     font-weight: bold;
   }
 
-  /* SKILLS */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+  /* REFINED STYLE: SIDE BY SIDE CAROUSEL ANIMATION */
+  .skills-carousel-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden;
+    padding: 20px 0;
   }
 
-  .skill-category {
+  .skills-marquee {
+    display: flex;
+    width: max-content;
+    gap: 16px;
+  }
+
+  /* Bidirectional scrolling */
+  .marquee-forward {
+    animation: scrollLeft 35s linear infinite;
+  }
+
+  .marquee-reverse {
+    animation: scrollRight 35s linear infinite;
+  }
+
+  .skills-carousel-container:hover .skills-marquee {
+    animation-play-state: paused;
+  }
+
+  .carousel-skill-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px;
-    backdrop-filter: blur(8px);
-    transition: border-color 0.25s;
-  }
-
-  .skill-category:hover { border-color: var(--border-hover); }
-
-  .skill-cat-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--teal);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .skill-tags {
+    border-radius: 10px;
+    padding: 14px 28px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 200px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.25s, transform 0.25s;
   }
 
-  .skill-tag {
-    font-size: 12px;
-    color: var(--grey-light);
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 4px 12px;
-    border-radius: 5px;
-    transition: all 0.2s;
+  .carousel-skill-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
   }
-  
-  .skill-tag:hover {
-    border-color: rgba(0, 229, 204, 0.3);
+
+  .c-skill-name {
+    font-size: 14px;
     color: var(--white);
-    background: rgba(0, 229, 204, 0.02);
+    font-weight: 500;
+  }
+
+  .c-skill-cat {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--teal-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes scrollLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes scrollRight {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
   }
 
   /* ABOUT */
@@ -635,7 +686,6 @@
 
   @media (max-width: 992px) {
     .projects-grid, .project-card.featured, .about-grid { grid-template-columns: 1fr; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
     .hero-stats { grid-template-columns: 1fr 1fr; }
   }
 
@@ -644,7 +694,7 @@
     .nav-links { display: none; }
     .hero { padding: 110px 24px 60px; }
     section { padding: 70px 24px; }
-    .skills-grid, .hero-stats { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -653,7 +703,10 @@
 <div class="bg-carousel-overlay"></div>
 
 <nav>
-  <a href="#" class="nav-logo">ND_</a>
+  <a href="#" class="nav-logo">
+    <span class="logo-static">ND</span>
+    <span class="logo-dynamic">_eenadayalan</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
@@ -667,32 +720,31 @@
   <div class="hero-content">
     <div class="hero-tag">Dublin, Ireland</div>
     <h1>
-      <span class="name-teal">Nithish</span><br>
-      Deenadayalan
+      I am <span class="name-teal">Nithish</span> Deenadayalan,
     </h1>
     <p class="hero-sub">
-      Data Analyst and AI Engineer engine-building scalable analytics pipelines and responsive intelligent layers, moving systems from prototype validation straight to production utility.
+      A results-driven Data Analyst and AI Engineer specialized in translating complex statistical methodologies into highly efficient dashboard infrastructures and live data models. Armed with an MSc from UCD Smurfit and deep technical experience across globally recognized research initiatives, I bridge the gap between heavy math and commercial enterprise tools.
     </p>
     <div class="hero-stats">
       <div>
-        <div class="stat-number">271K</div>
-        <div class="stat-label">Trials Indexed</div>
+        <div class="stat-number">MSc</div>
+        <div class="stat-label">UCD Business Analytics</div>
       </div>
       <div>
         <div class="stat-number">22</div>
         <div class="stat-label">Reporting Stores</div>
       </div>
       <div>
-        <div class="stat-number">&lt;200ms</div>
-        <div class="stat-label">Query Latency</div>
-      </div>
-      <div>
         <div class="stat-number">94%</div>
         <div class="stat-label">Model Accuracy</div>
       </div>
+      <div>
+        <div class="stat-number">3+</div>
+        <div class="stat-label">Core Pipeline Environments</div>
+      </div>
     </div>
     <div class="hero-cta">
-      <a href="#projects" class="btn-primary">Explore Pipeline Architecture</a>
+      <a href="#projects" class="btn-primary">View Full Portfolio</a>
       <a href="https://linkedin.com/in/nithish-deenadayalan" target="_blank" class="btn-secondary">LinkedIn Profile</a>
       <a href="https://github.com/nithishdeenadayalan" target="_blank" class="btn-secondary">Source Repositories</a>
     </div>
@@ -735,7 +787,7 @@
 
 <section id="projects">
   <div class="section-tag">Projects</div>
-  <h2 class="section-title">Featured Infrastructure</h2>
+  <h2 class="section-title">Core Projects</h2>
   <div class="projects-grid">
 
     <div class="project-card featured fade-in">
@@ -837,7 +889,7 @@
 
 <section id="experience">
   <div class="section-tag">Experience</div>
-  <h2 class="section-title">Professional Verification</h2>
+  <h2 class="section-title">Professional Experience</h2>
   <div class="experience-list">
 
     <div class="exp-item fade-in">
@@ -925,86 +977,54 @@
 
 <div class="section-divider"></div>
 
-<section id="skills">
+<section id="skills" style="overflow: hidden;">
   <div class="section-tag">Skills</div>
-  <h2 class="section-title">Full Inventory</h2>
-  <div class="skills-grid fade-in">
-    <div class="skill-category">
-      <div class="skill-cat-title">AI engineering</div>
-      <div class="skill-tags">
-        <span class="skill-tag">RAG Architectures</span>
-        <span class="skill-tag">Vector Indexing (FAISS)</span>
-        <span class="skill-tag">Sentence Transformers</span>
-        <span class="skill-tag">LangChain</span>
-        <span class="skill-tag">LangGraph Orchestration</span>
-        <span class="skill-tag">Claude APIs</span>
-        <span class="skill-tag">Structured Prompting</span>
-        <span class="skill-tag">ChromaDB</span>
-      </div>
+  <h2 class="section-title">Core Skills</h2>
+  
+  <div class="skills-carousel-container fade-in">
+    
+    <div class="skills-marquee marquee-forward">
+      <div class="carousel-skill-card"><span class="c-skill-name">RAG Architectures</span><span class="c-skill-cat">AI Engineering</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Vector Indexing (FAISS)</span><span class="c-skill-cat">AI Engineering</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">LangGraph Orchestration</span><span class="c-skill-cat">AI Engineering</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">FastAPI Services</span><span class="c-skill-cat">Full Stack</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">React.js & TypeScript</span><span class="c-skill-cat">Full Stack</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Apache Kafka</span><span class="c-skill-cat">Data Pipelines</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Databricks Platforms</span><span class="c-skill-cat">Data Pipelines</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">dbt Core</span><span class="c-skill-cat">Data Pipelines</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Advanced Relational SQL</span><span class="c-skill-cat">Analytics / BI</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">RAG Architectures</span><span class="c-skill-cat">AI Engineering</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Vector Indexing (FAISS)</span><span class="c-skill-cat">AI Engineering</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">LangGraph Orchestration</span><span class="c-skill-cat">AI Engineering</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">FastAPI Services</span><span class="c-skill-cat">Full Stack</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">React.js & TypeScript</span><span class="c-skill-cat">Full Stack</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Apache Kafka</span><span class="c-skill-cat">Data Pipelines</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Databricks Platforms</span><span class="c-skill-cat">Data Pipelines</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">dbt Core</span><span class="c-skill-cat">Data Pipelines</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Advanced Relational SQL</span><span class="c-skill-cat">Analytics / BI</span></div>
     </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">Full Stack Infrastructure</div>
-      <div class="skill-tags">
-        <span class="skill-tag">FastAPI Services</span>
-        <span class="skill-tag">React.js</span>
-        <span class="skill-tag">TypeScript</span>
-        <span class="skill-tag">Tailwind CSS</span>
-        <span class="skill-tag">RESTful Service Routing</span>
-        <span class="skill-tag">Docker Systems</span>
-        <span class="skill-tag">Git Versioning</span>
-        <span class="skill-tag">GitHub Action Workflows</span>
-      </div>
+
+    <div class="skills-marquee marquee-reverse">
+      <div class="carousel-skill-card"><span class="c-skill-name">Power BI & Power Query</span><span class="c-skill-cat">Analytics / BI</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Python Core & R</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">TensorFlow Modules</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Stochastic Optimization</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">CVaR Evaluation</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">SAS Analytics Matrix</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Data Governance Protocol</span><span class="c-skill-cat">Operational Strategy</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Agile Product Delivery</span><span class="c-skill-cat">Operational Strategy</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Stakeholder Reporting</span><span class="c-skill-cat">Operational Strategy</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Power BI & Power Query</span><span class="c-skill-cat">Analytics / BI</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Python Core & R</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">TensorFlow Modules</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Stochastic Optimization</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">CVaR Evaluation</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">SAS Analytics Matrix</span><span class="c-skill-cat">Statistical Programming</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Data Governance Protocol</span><span class="c-skill-cat">Operational Strategy</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Agile Product Delivery</span><span class="c-skill-cat">Operational Strategy</span></div>
+      <div class="carousel-skill-card"><span class="c-skill-name">Stakeholder Reporting</span><span class="c-skill-cat">Operational Strategy</span></div>
     </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">Data Pipelines</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Apache Kafka</span>
-        <span class="skill-tag">Azure Data Factory</span>
-        <span class="skill-tag">Databricks Environments</span>
-        <span class="skill-tag">Delta Lake Structures</span>
-        <span class="skill-tag">dbt Core</span>
-        <span class="skill-tag">MLflow Lifecycle Management</span>
-        <span class="skill-tag">Snowflake Architectures</span>
-        <span class="skill-tag">SQL Server Administration</span>
-      </div>
-    </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">Analytics and BI Engine</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Advanced Relational SQL</span>
-        <span class="skill-tag">Power BI Desktop / Services</span>
-        <span class="skill-tag">Power Query ETL</span>
-        <span class="skill-tag">Tableau Design</span>
-        <span class="skill-tag">Advanced Excel Logic</span>
-        <span class="skill-tag">Corporate KPI Definition</span>
-        <span class="skill-tag">Operational Dashboarding</span>
-      </div>
-    </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">Statistical Programming</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Python Core</span>
-        <span class="skill-tag">R Language</span>
-        <span class="skill-tag">TensorFlow Modules</span>
-        <span class="skill-tag">XGBoost Arrays</span>
-        <span class="skill-tag">SHAP Valuation Models</span>
-        <span class="skill-tag">Scikit-learn Pipelines</span>
-        <span class="skill-tag">PyTorch Ingestion</span>
-        <span class="skill-tag">SAS Analytics Matrix</span>
-        <span class="skill-tag">Stochastic Optimization</span>
-        <span class="skill-tag">CVaR Evaluation</span>
-      </div>
-    </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">Operational Strategy</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Agile Product Delivery</span>
-        <span class="skill-tag">Cross-Functional Reporting</span>
-        <span class="skill-tag">Data Governance Protocol</span>
-        <span class="skill-tag">Technical Systems Mapping</span>
-        <span class="skill-tag">Stakeholder Communications</span>
-      </div>
-    </div>
+
   </div>
 </section>
 
@@ -1027,7 +1047,7 @@
 </footer>
 
 <script>
-  // Advanced Navigation and Ambient Background Context Observer
+  // Navigation and Background Context Observer
   const sections = document.querySelectorAll('section[id], div[id="hero"]');
   const navLinks = document.querySelectorAll('.nav-links a');
 
@@ -1063,7 +1083,7 @@
         entry.target.classList.add('visible');
       }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.05 });
 
   document.querySelectorAll('.fade-in').forEach(targetCard => presentationObserver.observe(targetCard));
 </script>
